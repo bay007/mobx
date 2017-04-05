@@ -49,7 +49,7 @@ class App extends Component {
 			<button onClick={this.cambiarValorA0}>Fire componente 1! To 0</button>
 		</div>
 
-		<Tablero counterStore={this.counterStore}/>
+		<Tablero counterStore={this.counterStore}/> { /*Este atributo esta sobrado, el componente no lo usará*/ }
 		<DevTools />
 		
       </div>
@@ -61,7 +61,7 @@ class Tablero extends Component{
 	
 	constructor(props){
 		super(props);
-		this.counterStore=this.props.counterStore;//asignamos en el ambito del componente el objeto pasado por atributo
+		this.counterStore=new CounterStore();//asi hacemos que se cada componente tenga su propio Store
 		this.cambiarValorA0=this.cambiarValorA0.bind(this);
 		this.cambiarValorEn2=this.cambiarValorEn2.bind(this);
 	}
@@ -96,4 +96,4 @@ class Tablero extends Component{
 }
 
 observer(Tablero); //dejamos como observador el Tablero ya que ahi es donde se Mutará la VISTA
-export default App; //no se requiere devlacar como observador ya que no hay elementos que muten
+export default observer(App); //Se declara como Observador ya que se requiere que Muten algunas partes del componente
